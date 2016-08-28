@@ -11855,33 +11855,33 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Minimum price of the data</span>
-<span class="n">minimum_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-<span class="c1"># Alternative using numpy</span>
 <span class="n">minimum_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+<span class="c1"># Alternative using pandas</span>
+<span class="c1"># minimum_price = prices.min()</span>
 
 <span class="c1"># TODO: Maximum price of the data</span>
-<span class="n">maximum_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-<span class="c1"># Alternative using numpy</span>
 <span class="n">maximum_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+<span class="c1"># Alternative using pandas</span>
+<span class="c1"># maximum_price = prices.max()</span>
 
 <span class="c1"># TODO: Mean price of the data</span>
-<span class="n">mean_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="c1"># Alternative using numpy</span>
 <span class="n">mean_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+<span class="c1"># Alternative using pandas</span>
+<span class="c1"># mean_price = prices.mean()</span>
 
 <span class="c1"># TODO: Median price of the data</span>
-<span class="n">median_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
-<span class="c1"># Alternative using numpy</span>
 <span class="n">median_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+<span class="c1"># Alternative using pandas</span>
+<span class="c1"># median_price = prices.median()</span>
 
 <span class="c1"># TODO: Standard deviation of prices of the data</span>
-<span class="n">std_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="c1"># Alternative using numpy </span>
 <span class="n">std_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+<span class="c1"># Alternative using pandas </span>
+<span class="c1"># std_price = prices.std(ddof=0)</span>
 
 <span class="c1"># Show the calculated statistics</span>
 <span class="k">print</span> <span class="s2">&quot;Statistics for Boston housing dataset:</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -12155,7 +12155,7 @@ Standard deviation of prices: $165,171.13
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Extra check: Ritchie</strong></p>
+<p><strong>Extra check</strong></p>
 
 </div>
 </div>
@@ -14035,6 +14035,22 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Pro tip: RandomizedSearchCV</strong></p>
+<ul>
+<li>Although we will be using GridSearchCV, it may be computationally expensive for a bigger dataset. </li>
+<li>There are other techniques that could be used for hyperparameter optimization in order to save time like RandomizedSearchCV, in this case instead of exploring the whole parameter space just a fixed number of parameter settings is sampled from the specified distributions. </li>
+<li>This proves useful when we need to save time but is not necessary in cases in cases like ours where the data set is relatively small.</li>
+</ul>
+<p><em>I will be demonstrating GridSearch CV and RandomizedSearchCV below.</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Question-8---Cross-Validation">Question 8 - Cross-Validation<a class="anchor-link" href="#Question-8---Cross-Validation">&#182;</a></h3><p><em>What is the k-fold cross-validation training technique? What benefit does this technique provide for grid search when optimizing a model?</em><br>
 <strong>Hint:</strong> Much like the reasoning behind having a testing set, what could go wrong with using grid search without a cross-validated set?</p>
 
@@ -14098,6 +14114,16 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Using GridSearchCV</strong></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[53]:</div>
@@ -14140,6 +14166,65 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 
     <span class="c1"># Return the optimal model after fitting the data</span>
     <span class="k">return</span> <span class="n">grid</span><span class="o">.</span><span class="n">best_estimator_</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Using RandomizedSearchCV</strong>
+<br /><em>I have specifically changed the function's so it does not clash with the original question.</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import RandomizedSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.grid_search</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
+
+<span class="c1"># Create new similar function</span>
+<span class="k">def</span> <span class="nf">fit_model_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Performs grid search over the &#39;max_depth&#39; parameter for a </span>
+<span class="sd">        decision tree regressor trained on the input data [X, y]. &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Create cross-validation sets from the training data</span>
+    <span class="c1"># ShuffleSplit works iteratively compared to KFOLD</span>
+    <span class="c1"># It saves computation time when your dataset grows</span>
+    <span class="c1"># X.shape[0] is the total number of elements</span>
+    <span class="c1"># n_iter is the number of re-shuffling &amp; splitting iterations.</span>
+    <span class="n">cv_sets</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n_iter</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># TODO: Create a decision tree regressor object</span>
+    <span class="c1"># Instantiate</span>
+    <span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+
+    <span class="c1"># TODO: Create a dictionary for the parameter &#39;max_depth&#39; with a range from 1 to 10</span>
+    <span class="n">dt_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">dt_range</span><span class="p">)</span>
+
+    <span class="c1"># TODO: Transform &#39;performance_metric&#39; into a scoring function using &#39;make_scorer&#39; </span>
+    <span class="c1"># We initially created performance_metric using R2_score</span>
+    <span class="n">scoring_fnc</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">performance_metric</span><span class="p">)</span>
+
+    <span class="c1"># TODO: Create the grid search object</span>
+    <span class="c1"># You would realize we manually created each, including scoring_func using R^2</span>
+    <span class="n">rand</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv_sets</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring_fnc</span><span class="p">)</span>
+
+    <span class="c1"># Fit the grid search object to the data to compute the optimal model</span>
+    <span class="n">rand</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Return the optimal model after fitting the data</span>
+    <span class="k">return</span> <span class="n">rand</span><span class="o">.</span><span class="n">best_estimator_</span>
 </pre></div>
 
 </div>
@@ -14201,7 +14286,7 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Explanation of how we got the &#39;max_depth&#39; param</span>
@@ -14220,7 +14305,7 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[58]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[71]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -14244,7 +14329,7 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># We can access our value from reg.get_params(), a dictionary, using dict[&#39;key&#39;]</span>
@@ -14259,7 +14344,7 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[57]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[72]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -14282,6 +14367,57 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 <li>The optimal model has a maximum depth of 4.</li>
 <li>The max depth is the same as my guess in question 6. </li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Extra findings using RandomizedSearchCV</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Fit the training data to the model using grid search</span>
+<span class="n">reg_2</span> <span class="o">=</span> <span class="n">fit_model_2</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Produce the value for &#39;max_depth&#39;</span>
+<span class="k">print</span> <span class="s2">&quot;Parameter &#39;max_depth&#39; is {} for the optimal model.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reg_2</span><span class="o">.</span><span class="n">get_params</span><span class="p">()[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Parameter &#39;max_depth&#39; is 4 for the optimal model.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Interestingly, we get the same results!</strong></p>
 
 </div>
 </div>
@@ -14405,6 +14541,99 @@ Predicted selling price for Client 3&#39;s home: $938,053.85
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Pro tip: Assess Reasonableness of Prediction using <a href="http://scikit-learn.org/stable/modules/neighbors.html#finding-the-nearest-neighbors">NearestNeighbors</a></strong></p>
+<ul>
+<li>To assess if your prediction is reasonable, besides from comparing it with the median, the mean and checking if it is included in one standard deviation range, you could use SKlearn to find the nearest neighbours of the feature vector. </li>
+<li>You can then contrast your results with the closest neighbours, the ones that have similar characteristics.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[125]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import NearestNeighbors</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestNeighbors</span>
+
+<span class="c1"># Set number of neighbors</span>
+<span class="n">num_neighbors</span><span class="o">=</span><span class="mi">5</span>
+
+<span class="k">def</span> <span class="nf">nearest_neighbor_price</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1"># x is your vector and X is the data set.</span>
+    <span class="k">def</span> <span class="nf">find_nearest_neighbor_indexes</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span> 
+        <span class="c1"># Instantiate</span>
+        <span class="n">neigh</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">num_neighbors</span><span class="p">)</span>
+        <span class="c1"># Fit</span>
+        <span class="n">neigh</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">distance</span><span class="p">,</span> <span class="n">indexes</span> <span class="o">=</span> <span class="n">neigh</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">indexes</span>
+        <span class="c1"># This returns, the position, say for example [4, 55, 22]</span>
+        <span class="c1"># array([[357, 397, 356, 141, 395]])</span>
+    <span class="n">indexes</span> <span class="o">=</span> <span class="n">find_nearest_neighbor_indexes</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+    <span class="c1"># Create list</span>
+    <span class="n">sum_prices</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Loop through the array</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+        <span class="c1"># Append the prices to the list using the index position i</span>
+        <span class="n">sum_prices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="c1"># Average prices</span>
+    <span class="n">neighbor_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sum_prices</span><span class="p">)</span>
+    <span class="c1"># Return average</span>
+    <span class="k">return</span> <span class="n">neighbor_avg</span>
+
+<span class="c1"># Test if it&#39;s working with a list [4, 55, 22]</span>
+<span class="n">arr_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">22</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">nearest_neighbor_price</span><span class="p">(</span><span class="n">arr_test</span><span class="p">)</span>
+
+<span class="c1"># client_data = [[5, 17, 15], # Client 1</span>
+               <span class="c1">#[4, 32, 22], # Client 2</span>
+               <span class="c1">#[8, 3, 12]]  # Client 3</span>
+
+<span class="c1"># Loop through data, this is basically doing the following</span>
+<span class="c1"># print(nearest_neighbor_price([5, 17, 15]))</span>
+<span class="c1"># print(nearest_neighbor_price([4, 32, 22]))</span>
+<span class="c1"># print(nearest_neighbor_price([8, 3, 12]]))</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>  
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">client_data</span><span class="p">:</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">val</span><span class="o">=</span><span class="n">nearest_neighbor_price</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1"># num_neighbours is constant at 5</span>
+    <span class="c1"># index changes from 1 to 2 to 3</span>
+    <span class="c1"># value changes respectively from $372,540.00 to $162,120.00 to $897,120.00</span>
+    <span class="k">print</span> <span class="s2">&quot;The predicted {} nearest neighbors price for home {} is: ${:,.2f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_neighbors</span><span class="p">,</span><span class="n">index</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>280980.0
+The predicted 5 nearest neighbors price for home 1 is: $372,540.00
+The predicted 5 nearest neighbors price for home 2 is: $162,120.00
+The predicted 5 nearest neighbors price for home 3 is: $897,120.00
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
