@@ -11855,7 +11855,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Minimum price of the data</span>
@@ -11872,7 +11872,9 @@ div#notebook {
 <span class="n">median_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
 
 <span class="c1"># TODO: Standard deviation of prices of the data</span>
-<span class="n">std_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">std_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Alternative using numpy </span>
+<span class="n">std_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
 
 <span class="c1"># Show the calculated statistics</span>
 <span class="k">print</span> <span class="s2">&quot;Statistics for Boston housing dataset:</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -11899,7 +11901,7 @@ Minimum price: $105,000.00
 Maximum price: $1,024,800.00
 Mean price: $454,342.94
 Median price $438,900.00
-Standard deviation of prices: $165,340.28
+Standard deviation of prices: $165,171.13
 </pre>
 </div>
 </div>
@@ -11907,16 +11909,6 @@ Standard deviation of prices: $165,340.28
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><em>Personal note: There's nothing to state what degree of freedom to use for standard deviation. Thus, I've used the default of ddof=1 since this is a sample from the population and we should not use ddof=0.</em></p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -13369,7 +13361,10 @@ MzMzszrwYMvMzMzMzKwOPNgyMzMzMzOrg/8HniUaCd4l1n4AAAAASUVORK5CYII=
 <li>This indicates how the model does not seem to fit the data well. </li>
 </ul>
 </li>
-<li>Thus, we can say this model is facing a high bias problem. Consequently, having more training points would not benefit the model as the model is underfitting the dataset. Instead, one should increase the model complexity to better fit the dataset. </li>
+<li>Thus, we can say this model is facing a high bias problem. Consequently, having more training points would not benefit the model as the model is underfitting the dataset. Instead, one should increase the model complexity to better fit the dataset. <ul>
+<li>Morever, the teting score has reached a plateau suggesting the model may not improve from adding more training points. </li>
+</ul>
+</li>
 </ol>
 </li>
 </ul>
@@ -14021,6 +14016,7 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 <p><strong>Answer: </strong></p>
 <ul>
 <li>In essence, the grid search technique allows one to define a grid of parameters that will be searched using K-fold cross-validation.</li>
+<li>Importantly, the grid search technique exhaustively tries every combination of the provided hyper-parameter values in order to find the best model.</li>
 <li>One can then find the highest cross-validation accuracy that matches with the corresponding parameters that optimizes the learning algorithm.</li>
 </ul>
 
@@ -14059,6 +14055,7 @@ iHSsc2x9raiay7PxdLHuAoov4vi61orIu3i6Ry8HRgGo6mHgYWCLiLwHbMEzXRV4nm4dJCIH8bR6
 </li>
 <li>Hence, with the benefits of k-fold cross-validation, we're able to use the average testing accuracy as a benchmark to decide which is the most optimal set of parameters for the learning algorithm.<ul>
 <li>If we do not use a cross-validation set and we run grid-search, we would have different sets of optimal parameters due to the fact that without a cross-validation set, the estimate of out-of-sample performance would have a high variance.</li>
+<li>In summary, without k-fold cross-validation the risk is higher that grid search will select hyper-parameter value combinations that perform very well on a specific train-test split but poorly otherwise.</li>
 </ul>
 </li>
 </ul>
