@@ -12095,14 +12095,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Calculate number of students</span>
 <span class="n">n_students</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># TODO: Calculate number of features</span>
-<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
 
 <span class="c1"># TODO: Calculate passing students</span>
 <span class="c1"># Data filtering using .loc[rows, columns]</span>
@@ -12136,7 +12136,7 @@ div#notebook {
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Total number of students: 395
-Number of features: 31
+Number of features: 30
 Number of students who passed: 265
 Number of students who failed: 130
 Graduation rate of the class: 67.09%
@@ -12478,6 +12478,36 @@ Testing set has 95 samples.
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># To double check stratification</span>
+<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.33
+0.326315789474
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -12636,7 +12666,14 @@ Testing set has 95 samples.
 <li>It aims to predict based on independent variables, if there are not properly identified, Logistic Regression provides little predictive value</li>
 </ol>
 </li>
-<li>Suitability for the problem</li>
+<li>Suitability for the problem<ul>
+<li>Many features may be correlated<ul>
+<li>And Logistic Regression, unlike Naive Bayes, can deal with this problem</li>
+<li>Regularization to prevent overfitting due to dataset having many features</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p><strong>3. Support Vector Machines (SVMs)</strong></p>
 <ul>
@@ -12664,7 +12701,13 @@ Testing set has 95 samples.
 <li>Users might need to have certain domain knowledge to use kernel function</li>
 </ol>
 </li>
-<li>Suitability for the problem</li>
+<li>Suitability for the problem<ul>
+<li>Many features may be correlated<ul>
+<li>Regularization to prevent overfitting due to dataset having many features</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p><strong>Works Cited</strong></p>
 <ol>
@@ -13052,10 +13095,17 @@ F1 score for test set: 0.8052.
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong><a href="https://github.com/jeff1evesque/machine-learning/wiki/Algorithm:-Big-O-Notation">Big O</a> Notation for the 3 Algorithms</strong></p>
 <ol>
-<li>Naive Bayes: O(n)</li>
-<li>Logistic Regression: I'm not sure, but less than SVMs</li>
-<li>Support Vector Machines: O(2n) to O(3n)<ul>
-<li>I'm still unsure how to calculate the Big O notation for the 3 algorithms, I researched the 2 with no findings on Logistic Regression although it seems SVMs is the one with the worst performance</li>
+<li>Naive Bayes: <ul>
+<li>O(n)</li>
+</ul>
+</li>
+<li>Logistic Regression: <ul>
+<li>O(C^n)</li>
+</ul>
+</li>
+<li>Support Vector Machines: <ul>
+<li>O(n^3) with sigmoid kernel</li>
+<li>O(n^2) with space complexities</li>
 </ul>
 </li>
 </ol>
@@ -13079,10 +13129,9 @@ F1 score for test set: 0.8052.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong>
-<br \></p>
-<p>Logistic regression works in 2 steps.</p>
-<p>First, the model learns how a student's performance indicators lead to whether a student will graduate or otherwise. The model can do this because we already have existing data on students who have and have not graduated, so our model can learn the performance indicators of those students. Based on the student's performance indicators, the model would output a probability whether the student is likely to graduate or otherwise. Once the probability is above a set threshold, the student would be labelled as "likely to graduate" and if it's below the threshold, the student would be labelled as "unlikely to graduate".</p>
-<p>With this in mind, the second step is predicting whether new students would graduate or otherwise. This time we do not have information on existing students whether they have graduated or not as they are still studying. However, we have a model that learned from previous batches of students who graduated. The new students' performance indicators will be fed into our model and the model will output a probability and students will be classified according to whether they are "likely to graduate" or "unlikely to graduate". We can then take preventive measures on students who are unlikely to graduate.</p>
+<br \>
+First, the model learns how a student's performance indicators lead to whether a student will graduate or otherwise. The model can do this because we already have existing data on students who have and have not graduated, so our model can learn the performance indicators of those students. Based on the student's performance indicators, the model would output a weight for each performance indicator.</p>
+<p>With this in mind, the second step is predicting whether new students would graduate or otherwise. This time we do not have information on existing students whether they have graduated or not as they are still studying. However, we have a model that learned from previous batches of students who graduated. The new students' performance indicators with their respective weights will be fed into our model and the model will output a probability and students will be classified according to whether they are "likely to graduate" or "unlikely to graduate". We can then take preventive measures on students who are unlikely to graduate.</p>
 <p>Moreover, if we would like to play it safe and ensure that we spot as many students as we can who are "unlikely to graduate", even if they may be "likely to graduate", we can increase our strictness in determining their likelihood of graduating, and spot more of them. This is because there is no harm in flagging a student who is "likely to graduate" as "unlikely to graduate". But there may be severe repercussions if we flag a student who is "unlikely to graduate" as "likely to graduate" and do not attend to the student.</p>
 
 </div>
@@ -13144,12 +13193,12 @@ F1 score for test set: 0.8052.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create the parameters list you wish to tune</span>
 <span class="n">C</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
-<span class="n">solver</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;newton-cg&#39;</span><span class="p">,</span> <span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span> <span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="s1">&#39;sag&#39;</span><span class="p">]</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sag&#39;</span><span class="p">]</span>
 <span class="n">max_iter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">]</span>
 <span class="n">param_grid</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
 
@@ -13166,7 +13215,7 @@ F1 score for test set: 0.8052.
 <span class="n">grid_obj</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">ssscv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">f1_scorer</span><span class="p">)</span>
 
 <span class="c1"># TODO: Fit the grid search object to the training data and find the optimal parameters</span>
-<span class="n">grid_obj</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_all</span><span class="p">,</span> <span class="n">y_all</span><span class="p">)</span>
+<span class="n">grid_obj</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
 <span class="c1"># Get the estimator</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">best_estimator_</span>
@@ -13186,10 +13235,10 @@ F1 score for test set: 0.8052.
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Made predictions in 0.0002 seconds.
-Tuned model has a training F1 score of 0.8016.
-Made predictions in 0.0003 seconds.
-Tuned model has a testing F1 score of 0.8101.
+<pre>Made predictions in 0.0005 seconds.
+Tuned model has a training F1 score of 0.8040.
+Made predictions in 0.0004 seconds.
+Tuned model has a testing F1 score of 0.8050.
 </pre>
 </div>
 </div>
@@ -13225,11 +13274,14 @@ Tuned model has a testing F1 score of 0.8101.
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li>The final model's F<sub>1</sub> scores are:<ul>
-<li>Training F<sub>1</sub> score: 0.8016</li>
-<li>Testing F<sub>1</sub> score: 0.8101</li>
+<li>Training F<sub>1</sub> score: 0.8040</li>
+<li>Testing F<sub>1</sub> score: 0.8050</li>
 </ul>
 </li>
-<li>There is a substantial increase in the testing F<sub>1</sub> score of 0.06 of the tuned model compared to the untuned model</li>
+<li>There is an increase in the testing F<sub>1</sub> score of the tuned model compared to the untuned model<ul>
+<li>It is now higher than Naive Bayes' F<sub>1</sub> score</li>
+</ul>
+</li>
 </ul>
 
 </div>
