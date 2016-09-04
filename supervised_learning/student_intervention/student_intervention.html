@@ -12405,6 +12405,32 @@ Feature values:
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Pro Tip: Data assessment's impact on train/test split</strong></p>
+<ul>
+<li>When dealing with the new data set it is good practice to assess its specific characteristics and implement the cross validation technique tailored on those very characteristics, in our case there are two main elements:<ul>
+<li>Our dataset is small.</li>
+<li>Our dataset is slightly unbalanced. (There are more passing students than on passing students)</li>
+</ul>
+</li>
+</ul>
+<p><strong>What can we do?</strong></p>
+<ul>
+<li>We could take advantage of K-fold cross validation to exploit small data sets</li>
+<li>Even though in this case it might not be necessary, should we have to deal with heavily unbalance datasets, we could address the unbalanced nature of our data set using Stratified K-Fold and Stratified Shuffle Split Cross validation, as stratification is preserving the preserving the percentage of samples for each class<ul>
+<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html">http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html</a></li>
+<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedKFold.html">http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedKFold.html</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
@@ -12421,10 +12447,11 @@ Feature values:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_all</span><span class="p">,</span> <span class="n">y_all</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.24</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># For initial train/test split, we can obtain stratification by simply using stratify = y_all:</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_all</span><span class="p">,</span> <span class="n">y_all</span><span class="p">,</span> <span class="n">stratify</span> <span class="o">=</span> <span class="n">y_all</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">95</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
 <span class="c1"># Show the results of the split</span>
 <span class="k">print</span> <span class="s2">&quot;Training set has {} samples.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -12496,11 +12523,11 @@ Testing set has 95 samples.
 <ul>
 <li>We will be covering 3 supervised learning models.<ol>
 <li>Naive Bayes</li>
-<li>Decision Trees</li>
-<li>Adaboost</li>
+<li>Logistic Regression</li>
+<li>Support Vector Machines</li>
 </ol>
 </li>
-<li>But before we move on to cover the 3 supervised learning models, we will be discussing about the data itself because it is an important discussion to determin if the model makes a good candidate for the problem at hand.</li>
+<li>But before we move on to cover the 3 supervised learning models, we will be discussing about the data itself because it is an important discussion to determine if the model makes a good candidate for the problem at hand.</li>
 </ul>
 <p><strong>DATA OVERVIEW</strong></p>
 <p><strong>1. Skewed classes:</strong></p>
@@ -12531,6 +12558,7 @@ Testing set has 95 samples.
 </li>
 <li>This would have implications on some algorithms that require more data.<ul>
 <li>Generally we want more data, except when we are facing a high bias problem.</li>
+<li>In this case, we should keep to simpler algorithms.</li>
 </ul>
 </li>
 </ul>
@@ -12548,15 +12576,15 @@ Testing set has 95 samples.
 <p><strong>EXPLANATION OF MODELS</strong></p>
 <p><strong>1. Naive Bayes</strong></p>
 <ul>
-<li>Industry usage (Barbosa et. al 2014):<ul>
+<li>Industry usage (Barbosa et. al 2014)<ul>
 <li>Classifying eggs</li>
-<li>There is an interesting use of naive bayes (NB) as a learning algorithm to classify eggs into 2 groups: <ol>
-<li>Free-range eggs;<ul>
-<li>These are eggs from hens who are able to roam freely.</li>
+<li>There is an interesting use of naive bayes (NB) as a learning algorithm to classify eggs into 2 groups:<ol>
+<li>Free-range eggs<ul>
+<li>These are eggs from hens who are able to roam freely</li>
 </ul>
 </li>
-<li>Battery eggs.<ul>
-<li>These are eggs from hens who are kept in a small cage. Some may call this "unethical eggs".</li>
+<li>Battery eggs<ul>
+<li>These are eggs from hens who are kept in a small cage. Some may call this "unethical eggs"</li>
 </ul>
 </li>
 </ol>
@@ -12564,104 +12592,85 @@ Testing set has 95 samples.
 <li>The study revealed that NB provided a high accuracy of 90% when classifying between the 2 groups of eggs. </li>
 </ul>
 </li>
-<li>Strengths: <ul>
-<li>Training and prediction speed: fast</li>
-<li>Performs well on small number of observations: yes</li>
-<li>Handles many irrelevant features well (separates signal from noise): yes</li>
+<li>Strengths<ol>
+<li>Converges quicker than discriminative models like Logistic Regression hence less data is required</li>
+</ol>
+</li>
+<li>Weaknesses<ol>
+<li>Requires observations to be independent of one another<ul>
+<li>But in practice, the classifier performs quite well even when the independence assumption is violated</li>
 </ul>
 </li>
-<li>Weaknesses:<ul>
-<li>Average predictive accuracy: lower relative to others like Adaboost</li>
-<li>Automatically learn features' interactions: no</li>
-</ul>
+<li>Simple representation without opportunities for hyperparameter tuning</li>
+</ol>
 </li>
-<li>Suitability for the problem:<ul>
-<li>This algorithm performs well for this problem because the data has the following properties:<ol>
+<li>Suitability for the problem<ul>
+<li>This algorithm performs well for this problem because the data has the following properties:<ul>
 <li>Low number of observations<ul>
-<li>Naive bayes performs well on a small dataset</li>
+<li>Naive bayes performs well on small datasets </li>
 </ul>
 </li>
-<li>Many features<ul>
-<li>Naive bayes handles many irrelevant features well</li>
 </ul>
-</li>
-</ol>
 </li>
 </ul>
 </li>
 </ul>
-<p><strong>2. Decision Trees</strong></p>
+<p><strong>2. Logistic Regression</strong></p>
 <ul>
-<li>Industry usage (Zhang et. al 2015):<ul>
-<li>Predicting to buy or sell stocks (discrete output) using StockTwits<ul>
-<li>Buy: when higher occurences of positive words</li>
-<li>Sell: when higher occurences of negative words</li>
+<li>Industry usage (Penderson et. al 2014)<ul>
+<li>Classification of protein sequences<ul>
+<li>Identify and automatically categorize protein sequences into one of 11 pre-defined classes</li>
+<li>Tremendous potential for further bioinformatics applications using Logistic Regression </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Strengths:<ul>
-<li>Training and prediction speed: fast</li>
-<li>Automatically learn features' interactions: yes</li>
-</ul>
-</li>
-<li>Weaknesses:<ul>
-<li>Performs well on small number of observations: no</li>
-<li>Handles many irrelevant features well (separates signal from noise): no</li>
-<li>Average predictive accuracy: lower relative to others like Adaboost</li>
-</ul>
-</li>
-<li>Suitability for the problem:<ul>
-<li>This algorithm performs well for this problem because the data has the following property:<ol>
-<li>Many Features<ul>
-<li>Decision trees performs well in learning on possible interactions amongst features</li>
-<li>This is something that Naive Bayes cannot do</li>
-</ul>
-</li>
+<li>Strengths<ol>
+<li>Many ways to regularize the model to tolerate some errors and avoid over-fitting</li>
+<li>Unlike Naive Bayes, we do not have to worry about correlated features </li>
+<li>Unlike Support Vector Machines, we can easily take in new data using an online gradient descent method</li>
 </ol>
 </li>
-</ul>
+<li>Weaknesses<ol>
+<li>Requires observations to be independent of one another</li>
+<li>It aims to predict based on independent variables, if there are not properly identified, Logistic Regression provides little predictive value</li>
+</ol>
 </li>
+<li>Suitability for the problem</li>
 </ul>
-<p><strong>3. Adaboost</strong></p>
+<p><strong>3. Support Vector Machines (SVMs)</strong></p>
 <ul>
-<li>Industry usage (Mathanker et. al 2011):<ul>
-<li>Classifying pecans (type of tummy nut)<ul>
-<li>Not defective</li>
-<li>Defective </li>
+<li>Industry usage (Di Pillo et. al 2016):<ul>
+<li>Sales forecasting when running promotions<ul>
+<li>Originally, statistical methods like ARIMA and smoothing methods are used like Exponential Smoothing</li>
+<li>But they could fail if high irregularity of sales are present</li>
+<li>Hence SVMs provide a good alternative </li>
 </ul>
 </li>
-<li>The paper reported an accuracy of 92.3% using Adaboost</li>
 </ul>
 </li>
-<li>Strengths:<ul>
-<li>Handles many irrelevant features well (separates signal from noise):  yes</li>
-<li>Average predictive accuracy: higher relative to decision trees and naive bayes</li>
-<li>Automatically learn features' interactions: yes</li>
-</ul>
-</li>
-<li>Weaknesses:<ul>
-<li>Training and prediction speed: training is slow but prediction is fast</li>
-<li>Performs well on small number of observations: no</li>
-</ul>
-</li>
-<li>Suitability for the problem:<ul>
-<li>This algorithm performs well for this problem because the data has the following property:<ol>
-<li>Many Features<ul>
-<li>Adaboost performs well in learning on possible interactions amongst features</li>
-<li>Adaboost handles many irrelevant features well</li>
+<li>Strengths<ol>
+<li>SVM have regularization parameters to tolerate some errors and avoid over-fitting</li>
+<li>Kernel trick: Users can build in expert knowledge about the problem via engineering the kernel</li>
+<li>Provides a good out-of-sample generalization, if the parameters C and gamma are appropriate chosen <ul>
+<li>In other words, SVM might be more robust even when the training sample has some bias</li>
 </ul>
 </li>
 </ol>
 </li>
-</ul>
+<li>Weaknesses<ol>
+<li>Bad interpretability: SVMs are black boxes</li>
+<li>High computational cost: SVMs scale exponentially in training time</li>
+<li>Users might need to have certain domain knowledge to use kernel function</li>
+</ol>
 </li>
+<li>Suitability for the problem</li>
 </ul>
 <p><strong>Works Cited</strong></p>
 <ol>
 <li>Barbosa, R. M., Nacano, L. R., Freitas, R., Batista, B. L. and Barbosa, F. (2014), The Use of Decision Trees and Naïve Bayes Algorithms and Trace Element Patterns for Controlling the Authenticity of Free-Range-Pastured Hens’ Eggs. Journal of Food Science, 79: C1672–C1677. <a href="http://dx.doi.org/10.1111/1750-3841.12577">http://dx.doi.org/10.1111/1750-3841.12577</a>.</li>
-<li>Zhongbo Zhang, Shuanghu Zhang, Simin Geng, Yunzhong Jiang, Hui Li, Dawei Zhang, Application of decision trees to the determination of the year-end level of a carryover storage reservoir based on the iterative dichotomizer 3, International Journal of Electrical Power &amp; Energy Systems, Volume 64, January 2015, Pages 375-383, ISSN 0142-0615, <a href="http://dx.doi.org/10.1016/j.ijepes.2014.06.073">http://dx.doi.org/10.1016/j.ijepes.2014.06.073</a>.</li>
-<li>S.K. Mathanker, P.R. Weckler, T.J. Bowser, N. Wang, N.O. Maness, AdaBoost classifiers for pecan defect classification, Computers and Electronics in Agriculture, Volume 77, Issue 1, June 2011, Pages 60-68, ISSN 0168-1699, <a href="http://dx.doi.org/10.1016/j.compag.2011.03.008">http://dx.doi.org/10.1016/j.compag.2011.03.008</a>.</li>
+<li>Pedersen, B. P., Ifrim, G., Liboriussen, P., Axelsen, K. B., Palmgren, M. G., Nissen, P., . . . Pedersen, C. N. S. (2014). Large scale identification and categorization of protein sequences using structured logistic regression. PloS One, 9(1), 1. <a href="http://dx.doi.org/10.1371/journal.pone.0085139">http://dx.doi.org/10.1371/journal.pone.0085139</a></li>
+<li>Di Pillo, G., Latorre, V., Lucidi, S. et al. 4OR-Q J Oper Res (2016) 14: 309. <a href="http://dx.doi.org/10.1007/s10288-016-0316-0">http://dx.doi.org/10.1007/s10288-016-0316-0</a></li>
 </ol>
 
 </div>
@@ -12761,19 +12770,18 @@ Testing set has 95 samples.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Import the three supervised learning models from sklearn</span>
 <span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
 
 <span class="c1"># TODO: Initialize the three models</span>
 <span class="n">clf_A</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
-<span class="n">clf_B</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
-<span class="n">clf_C</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">()</span>
+<span class="n">clf_B</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_C</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
 <span class="c1"># TODO: Set up the training set sizes</span>
 <span class="n">X_train_100</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:]</span>
@@ -12788,20 +12796,10 @@ Testing set has 95 samples.
 <span class="c1"># TODO: Execute the &#39;train_predict&#39; function for each classifier and each training set size</span>
 <span class="c1"># train_predict(clf, X_train, y_train, X_test, y_test)</span>
 
-<span class="c1"># Gaussian Naive Bayes for 100, 200 and 300 examples</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-
-<span class="c1"># Decision Tree for 100, 200 and 300 examples</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-
-<span class="c1"># Adaboost for 100, 200 and 300 examples</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">clf</span> <span class="ow">in</span> <span class="p">[</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">clf_B</span><span class="p">,</span> <span class="n">clf_C</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">{}: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]:</span>
+        <span class="n">train_predict</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">y_train</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12815,68 +12813,77 @@ Testing set has 95 samples.
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
+GaussianNB: 
+
+
 Training a GaussianNB using a training set size of 100. . .
-Trained model in 0.0021 seconds
-Made predictions in 0.0008 seconds.
-F1 score for training set: 0.5000.
+Trained model in 0.0012 seconds
 Made predictions in 0.0003 seconds.
-F1 score for test set: 0.2619.
+F1 score for training set: 0.7752.
+Made predictions in 0.0003 seconds.
+F1 score for test set: 0.6457.
 
 Training a GaussianNB using a training set size of 200. . .
-Trained model in 0.0008 seconds
+Trained model in 0.0026 seconds
 Made predictions in 0.0004 seconds.
-F1 score for training set: 0.7903.
+F1 score for training set: 0.8060.
 Made predictions in 0.0002 seconds.
-F1 score for test set: 0.7481.
+F1 score for test set: 0.7218.
 
 Training a GaussianNB using a training set size of 300. . .
-Trained model in 0.0009 seconds
-Made predictions in 0.0005 seconds.
-F1 score for training set: 0.7789.
-Made predictions in 0.0005 seconds.
-F1 score for test set: 0.7794.
-
-Training a DecisionTreeClassifier using a training set size of 100. . .
-Trained model in 0.0013 seconds
-Made predictions in 0.0002 seconds.
-F1 score for training set: 1.0000.
-Made predictions in 0.0002 seconds.
-F1 score for test set: 0.6870.
-
-Training a DecisionTreeClassifier using a training set size of 200. . .
-Trained model in 0.0013 seconds
+Trained model in 0.0008 seconds
+Made predictions in 0.0004 seconds.
+F1 score for training set: 0.8134.
 Made predictions in 0.0003 seconds.
-F1 score for training set: 1.0000.
-Made predictions in 0.0002 seconds.
-F1 score for test set: 0.7246.
+F1 score for test set: 0.7761.
 
-Training a DecisionTreeClassifier using a training set size of 300. . .
+LogisticRegression: 
+
+
+Training a LogisticRegression using a training set size of 100. . .
+Trained model in 0.0020 seconds
+Made predictions in 0.0002 seconds.
+F1 score for training set: 0.8671.
+Made predictions in 0.0001 seconds.
+F1 score for test set: 0.7068.
+
+Training a LogisticRegression using a training set size of 200. . .
 Trained model in 0.0018 seconds
 Made predictions in 0.0002 seconds.
-F1 score for training set: 1.0000.
+F1 score for training set: 0.8211.
 Made predictions in 0.0001 seconds.
-F1 score for test set: 0.6880.
+F1 score for test set: 0.7391.
 
-Training a AdaBoostClassifier using a training set size of 100. . .
-Trained model in 0.0844 seconds
-Made predictions in 0.0045 seconds.
-F1 score for training set: 0.9692.
-Made predictions in 0.0046 seconds.
-F1 score for test set: 0.7132.
+Training a LogisticRegression using a training set size of 300. . .
+Trained model in 0.0034 seconds
+Made predictions in 0.0003 seconds.
+F1 score for training set: 0.8512.
+Made predictions in 0.0002 seconds.
+F1 score for test set: 0.7500.
 
-Training a AdaBoostClassifier using a training set size of 200. . .
-Trained model in 0.0843 seconds
-Made predictions in 0.0055 seconds.
-F1 score for training set: 0.8409.
-Made predictions in 0.0049 seconds.
-F1 score for test set: 0.7536.
+SVC: 
 
-Training a AdaBoostClassifier using a training set size of 300. . .
-Trained model in 0.1104 seconds
-Made predictions in 0.0061 seconds.
-F1 score for training set: 0.8389.
-Made predictions in 0.0042 seconds.
-F1 score for test set: 0.7883.
+
+Training a SVC using a training set size of 100. . .
+Trained model in 0.0011 seconds
+Made predictions in 0.0008 seconds.
+F1 score for training set: 0.8354.
+Made predictions in 0.0007 seconds.
+F1 score for test set: 0.8025.
+
+Training a SVC using a training set size of 200. . .
+Trained model in 0.0043 seconds
+Made predictions in 0.0021 seconds.
+F1 score for training set: 0.8431.
+Made predictions in 0.0011 seconds.
+F1 score for test set: 0.8105.
+
+Training a SVC using a training set size of 300. . .
+Trained model in 0.0066 seconds
+Made predictions in 0.0066 seconds.
+F1 score for training set: 0.8664.
+Made predictions in 0.0019 seconds.
+F1 score for test set: 0.8052.
 </pre>
 </div>
 </div>
@@ -12913,62 +12920,28 @@ F1 score for test set: 0.7883.
 <tbody>
 <tr>
 <td style="text-align:center">100</td>
-<td style="text-align:center">0.0011</td>
+<td style="text-align:center">0.0012</td>
 <td style="text-align:center">0.0003</td>
-<td style="text-align:center">0.5000</td>
-<td style="text-align:center">0.2619</td>
+<td style="text-align:center">0.7752</td>
+<td style="text-align:center">0.6457</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
-<td style="text-align:center">0.0007</td>
-<td style="text-align:center">0.0003</td>
-<td style="text-align:center">0.7903</td>
-<td style="text-align:center">0.7481</td>
+<td style="text-align:center">0.0026</td>
+<td style="text-align:center">0.0002</td>
+<td style="text-align:center">0.8060</td>
+<td style="text-align:center">0.7218</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
 <td style="text-align:center">0.0008</td>
-<td style="text-align:center">0.0004</td>
-<td style="text-align:center">0.7789</td>
-<td style="text-align:center">0.7794</td>
-</tr>
-</tbody>
-</table>
-<p><strong> Classifer 2 - Decision Tree</strong></p>
-<table>
-<thead><tr>
-<th style="text-align:center">Training Set Size</th>
-<th style="text-align:center">Training Time</th>
-<th style="text-align:center">Prediction Time (test)</th>
-<th style="text-align:center">F1 Score (train)</th>
-<th style="text-align:center">F1 Score (test)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">100</td>
-<td style="text-align:center">0.0007</td>
-<td style="text-align:center">0.0001</td>
-<td style="text-align:center">1.0000</td>
-<td style="text-align:center">0.6970</td>
-</tr>
-<tr>
-<td style="text-align:center">200</td>
-<td style="text-align:center">0.0015</td>
-<td style="text-align:center">0.0002</td>
-<td style="text-align:center">1.0000</td>
-<td style="text-align:center">0.6866</td>
-</tr>
-<tr>
-<td style="text-align:center">300</td>
-<td style="text-align:center">0.0019</td>
 <td style="text-align:center">0.0003</td>
-<td style="text-align:center">1.0000</td>
-<td style="text-align:center">0.6822</td>
+<td style="text-align:center">0.8134</td>
+<td style="text-align:center">0.7761</td>
 </tr>
 </tbody>
 </table>
-<p><strong> Classifer 3 - Adaboost</strong></p>
+<p><strong> Classifer 2 - Logistic Regression</strong></p>
 <table>
 <thead><tr>
 <th style="text-align:center">Training Set Size</th>
@@ -12981,24 +12954,58 @@ F1 score for test set: 0.7883.
 <tbody>
 <tr>
 <td style="text-align:center">100</td>
-<td style="text-align:center">0.0884</td>
-<td style="text-align:center">0.0050</td>
-<td style="text-align:center">0.9692</td>
-<td style="text-align:center">0.7132</td>
+<td style="text-align:center">0.0020</td>
+<td style="text-align:center">0.0001</td>
+<td style="text-align:center">0.8671</td>
+<td style="text-align:center">0.7068</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
-<td style="text-align:center">0.0990</td>
-<td style="text-align:center">0.0053</td>
-<td style="text-align:center">0.8409</td>
-<td style="text-align:center">0.7536</td>
+<td style="text-align:center">0.0018</td>
+<td style="text-align:center">0.0001</td>
+<td style="text-align:center">0.8211</td>
+<td style="text-align:center">0.7391</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
-<td style="text-align:center">0.0924</td>
-<td style="text-align:center">0.0055</td>
-<td style="text-align:center">0.8389</td>
-<td style="text-align:center">0.7883</td>
+<td style="text-align:center">0.0034</td>
+<td style="text-align:center">0.0002</td>
+<td style="text-align:center">0.8512</td>
+<td style="text-align:center">0.7500</td>
+</tr>
+</tbody>
+</table>
+<p><strong> Classifer 3 - Support Vector Machines</strong></p>
+<table>
+<thead><tr>
+<th style="text-align:center">Training Set Size</th>
+<th style="text-align:center">Training Time</th>
+<th style="text-align:center">Prediction Time (test)</th>
+<th style="text-align:center">F1 Score (train)</th>
+<th style="text-align:center">F1 Score (test)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.0011</td>
+<td style="text-align:center">0.0007</td>
+<td style="text-align:center">0.8366</td>
+<td style="text-align:center">0.8025</td>
+</tr>
+<tr>
+<td style="text-align:center">200</td>
+<td style="text-align:center">0.0043</td>
+<td style="text-align:center">0.0011</td>
+<td style="text-align:center">0.8552</td>
+<td style="text-align:center">0.8105</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.0066</td>
+<td style="text-align:center">0.0019</td>
+<td style="text-align:center">0.8615</td>
+<td style="text-align:center">0.8052</td>
 </tr>
 </tbody>
 </table>
@@ -13032,7 +13039,26 @@ F1 score for test set: 0.7883.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>The performance for Naive Bayes is better than Decision Tree, both in terms of computational time and its ability to predict. Hence, we should choose Naive Bayes over Decision Tree. Consequently, we move on to compare Naive Bayes with Adaboost. Although Adaboost has a slightly better predictive ability than Naive Bayes, it is very small. Moreover, Adaboost consumes a lot more computational time compared to Naive Bayes and this implies that we need more computational power which costs more. In light of this, we should choose Naive Bayes as it provides comparable predictive capabilities while providing substantial cost savings relative to Adaboost, the next best model.</p>
+<p>The predictive performance of SVMs is slightly better than Naive Bayes. However, it is important to note how SVMs' computational time would grow much faster than Naive Bayes with more data, and our costs would increase exponentially when we have more students. On the other hand, Naive Bayes' computational time would grow linearly with more data, and our cost would not rise as fast. Hence, Naive Bayes offers a good alternative to SVMs taking into account its performance on a small dataset and on a potentially large and growing dataset.</p>
+<p>Consequently, we compare Naive Bayes and Logistic Regression. Although the results show Logistic Regression is slightly worst than Naive Bayes in terms of it predictive performance, slight tuning of Logistic Regression's model would easily yield much better predictive performance compare to Naive Bayes. This is in contrast to Naive Bayes where we do not have the opportunity to tune model. Hence, we should go with Logistic Regression.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong><a href="https://github.com/jeff1evesque/machine-learning/wiki/Algorithm:-Big-O-Notation">Big O</a> Notation for the 3 Algorithms</strong></p>
+<ol>
+<li>Naive Bayes: O(n)</li>
+<li>Logistic Regression: I'm not sure, but less than SVMs</li>
+<li>Support Vector Machines: O(2n) to O(3n)<ul>
+<li>I'm still unsure how to calculate the Big O notation for the 3 algorithms, I researched the 2 with no findings on Logistic Regression although it seems SVMs is the one with the worst performance</li>
+</ul>
+</li>
+</ol>
 
 </div>
 </div>
@@ -13053,10 +13079,11 @@ F1 score for test set: 0.7883.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong>
-<br \>We have decided to choose the Naive Bayes model due to its ability to best predict if a student is likely to graduate or otherwise at a reasonable cost. Moreover, the model can work with a small dataset of students, hence saving more data collection costs. With the benefits of the model in mind, we move on to explain how this model works in three steps. A minor flaw of this model is that it assumes the performance indicators of students are independent of one another, but in practice even if this assumption is violated the model has been known to work well too.</p>
-<p>First, the model would look at all of the students' performance indicators such as health state, relationship status, absence rate and many others.</p>
-<p>Second, it will learn how each performance indicator contribute to the probability if a student would graduate or otherwise. For example, if a student did not graduate, the student may have a high level of absence rate and the model would learn this probability, which may likely be high. But we know one indicator is not indicative of whether a student graduates or not, so we account for the probabilities of all of the student's performance indicators where each performance indicator contributes to the probability if a student would graduate or otherwise.</p>
-<p>Third, when we have new students' performance indicators, we can easily feed their performance indicators into the model and the model would predict, based on all of the performance indicators' probabilities, that a student is likely to graduate or otherwise.</p>
+<br \></p>
+<p>Logistic regression works in 2 steps.</p>
+<p>First, the model learns how a student's performance indicators lead to whether a student will graduate or otherwise. The model can do this because we already have existing data on students who have and have not graduated, so our model can learn the performance indicators of those students. Based on the student's performance indicators, the model would output a probability whether the student is likely to graduate or otherwise. Once the probability is above a set threshold, the student would be labelled as "likely to graduate" and if it's below the threshold, the student would be labelled as "unlikely to graduate".</p>
+<p>With this in mind, the second step is predicting whether new students would graduate or otherwise. This time we do not have information on existing students whether they have graduated or not as they are still studying. However, we have a model that learned from previous batches of students who graduated. The new students' performance indicators will be fed into our model and the model will output a probability and students will be classified according to whether they are "likely to graduate" or "unlikely to graduate". We can then take preventive measures on students who are unlikely to graduate.</p>
+<p>Moreover, if we would like to play it safe and ensure that we spot as many students as we can who are "unlikely to graduate", even if they may be "likely to graduate", we can increase our strictness in determining their likelihood of graduating, and spot more of them. This is because there is no harm in flagging a student who is "likely to graduate" as "unlikely to graduate". But there may be severe repercussions if we flag a student who is "unlikely to graduate" as "likely to graduate" and do not attend to the student.</p>
 
 </div>
 </div>
@@ -13066,17 +13093,7 @@ F1 score for test set: 0.7883.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Naive bayes is a simple model that does not have hyperparameters to tune.</strong></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Implementation:-Model-Tuning-(Not-Applicable)">Implementation: Model Tuning (Not Applicable)<a class="anchor-link" href="#Implementation:-Model-Tuning-(Not-Applicable)">&#182;</a></h3><p>Fine tune the chosen model. Use grid search (<code>GridSearchCV</code>) with at least one important parameter tuned with at least 3 different values. You will need to use the entire training set for this. In the code cell below, you will need to implement the following:</p>
+<h3 id="Implementation:-Model-Tuning-(Logistic-Regression)">Implementation: Model Tuning (Logistic Regression)<a class="anchor-link" href="#Implementation:-Model-Tuning-(Logistic-Regression)">&#182;</a></h3><p>Fine tune the chosen model. Use grid search (<code>GridSearchCV</code>) with at least one important parameter tuned with at least 3 different values. You will need to use the entire training set for this. In the code cell below, you will need to implement the following:</p>
 <ul>
 <li>Import <a href="http://scikit-learn.org/stable/modules/generated/sklearn.grid_search.GridSearchCV.html"><code>sklearn.grid_search.gridSearchCV</code></a> and <a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html"><code>sklearn.metrics.make_scorer</code></a>.</li>
 <li>Create a dictionary of parameters you wish to tune for the chosen model.<ul>
@@ -13095,27 +13112,61 @@ F1 score for test set: 0.7883.
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Pro Tip:</strong></p>
+<ul>
+<li>We can use a stratified shuffle split data-split which preserves the percentage of samples for each class and combines it with cross validation. This could be extremely useful when the dataset is strongly imbalanced towards one of the two target labels</li>
+<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html">http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html</a></li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Import &#39;GridSearchCV&#39; and &#39;make_scorer&#39;</span>
+<span class="kn">from</span> <span class="nn">sklearn.grid_search</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">StratifiedShuffleSplit</span>
+</pre></div>
 
-<span class="c1"># TODO: Create the parameters list you wish to tune</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+</div>
+</div>
 
-<span class="c1"># TODO: Initialize the classifier</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create the parameters list you wish to tune</span>
+<span class="n">C</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;newton-cg&#39;</span><span class="p">,</span> <span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span> <span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="s1">&#39;sag&#39;</span><span class="p">]</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
 
-<span class="c1"># TODO: Make an f1 scoring function using &#39;make_scorer&#39; </span>
-<span class="n">f1_scorer</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="c1"># Initialize the classifier</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Make an f1 scoring function using &#39;make_scorer&#39; </span>
+<span class="n">f1_scorer</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">f1_score</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="p">)</span>
+
+<span class="c1"># Stratified Shuffle Split</span>
+<span class="n">ssscv</span> <span class="o">=</span> <span class="n">StratifiedShuffleSplit</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>  
 
 <span class="c1"># TODO: Perform grid search on the classifier using the f1_scorer as the scoring method</span>
-<span class="n">grid_obj</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">grid_obj</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">ssscv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">f1_scorer</span><span class="p">)</span>
 
 <span class="c1"># TODO: Fit the grid search object to the training data and find the optimal parameters</span>
-<span class="n">grid_obj</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">grid_obj</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_all</span><span class="p">,</span> <span class="n">y_all</span><span class="p">)</span>
 
 <span class="c1"># Get the estimator</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">best_estimator_</span>
@@ -13134,18 +13185,12 @@ F1 score for test set: 0.7883.
 
 
 <div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-18-f8de40c85d5d&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     17</span> 
-<span class="ansi-green-intense-fg ansi-bold">     18</span> <span class="ansi-red-fg"># Get the estimator</span>
-<span class="ansi-green-fg">---&gt; 19</span><span class="ansi-red-fg"> </span>clf <span class="ansi-blue-fg">=</span> grid_obj<span class="ansi-blue-fg">.</span>best_estimator_
-<span class="ansi-green-intense-fg ansi-bold">     20</span> 
-<span class="ansi-green-intense-fg ansi-bold">     21</span> <span class="ansi-red-fg"># Report the final F1 score for training and testing after parameter tuning</span>
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;best_estimator_&#39;</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Made predictions in 0.0002 seconds.
+Tuned model has a training F1 score of 0.8016.
+Made predictions in 0.0003 seconds.
+Tuned model has a testing F1 score of 0.8101.
+</pre>
 </div>
 </div>
 
@@ -13178,7 +13223,14 @@ F1 score for test set: 0.7883.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Naive bayes is a simple model that does not have hyperparameters to tune. F1 score does not change.</strong></p>
+<ul>
+<li>The final model's F<sub>1</sub> scores are:<ul>
+<li>Training F<sub>1</sub> score: 0.8016</li>
+<li>Testing F<sub>1</sub> score: 0.8101</li>
+</ul>
+</li>
+<li>There is a substantial increase in the testing F<sub>1</sub> score of 0.06 of the tuned model compared to the untuned model</li>
+</ul>
 
 </div>
 </div>
