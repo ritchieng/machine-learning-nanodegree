@@ -78,3 +78,6 @@ There is only a change of code for `action` to choose an action randomly through
 <script src="https://gist.github.com/ritchieng/905f12bf65265331f0e051541379c767.js"></script>
 
 ## Improve the Q-Learning Driving Agent
+
+## Estimating Q from Transitions: Q-learning Equation
+- $$ \hat{Q}(s, a)\leftarrow_{\alpha_t} \ r + γ \ \max_{a'} \hat{Q}(s', a') $$
