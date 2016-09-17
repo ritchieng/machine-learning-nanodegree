@@ -56,6 +56,8 @@ There is only a change of code for `action` to choose an action randomly through
 - Relevant inputs:
     - Status of traffic lights: red and green.
         - This input is relevant as we need to obey the rules to reach our destination.       
+    - Next waypoint
+        - This is relevant too because it concerns where the car should go.
 - Irrelevant inputs:
     - Status of traffic at that intersection
         - This is a situation where there are few cars.
@@ -69,7 +71,6 @@ There is only a change of code for `action` to choose an action randomly through
 ### Number of States
 - As such, we would have states that factor in next_waypoint (Left, Right and Forward) and light (red or green)
     - This would result in 3 (next_waypoint) x 2 (light) = 6 states
-    - Since there are 8 x 6 positions, we would have a total of 8 x 6 x 6, or 288 states to train.
 - 6 states per position seem like a reasonable number given that the goal of Q-Learning is to learn and make informed decisions about each state.
     - This is because we have to understand that we face an exploration-exploitation dilemma here that is a fundamental trade-off in reinforcement learning.
     - This seems like a good balance of exploration and exploiting 6 states.
@@ -77,7 +78,48 @@ There is only a change of code for `action` to choose an action randomly through
 ### Code
 <script src="https://gist.github.com/ritchieng/905f12bf65265331f0e051541379c767.js"></script>
 
+## Implement a Q-Learning Driving Agent
+
+### Estimating Q from Transitions: Q-learning Equation
+- Personal notes:
+    - ![](report.png)
+
+### Parameters Initiated
+- Alpha (learning rate), is arbitrarily set at 0.5.
+- Gamma (discount rate), is aribitrarily set at 0.5.
+- Epsilon (randomness probability), is arbitrarily set such that it is 1%.
+- Q initial values set at 1
+
+### Results
+- The smart cab reaches the destination more frequently. 
+- Also, the smart cab takes fewer moves to reach to the destination.
+    - The final trial took only 8 steps.
+- Moreover, as you can see, we've achieved a success rate of 94% with a random assignment of parameters
+     - ![](training_without_improvements.png)
+     
+### Trial 100 results
+<script src="https://gist.github.com/ritchieng/02a2dd735ff4b13dccfeb45fb4e07fe3.js"></script>
+
+### Code
+<script src="https://gist.github.com/ritchieng/a43b7c188f083bb731efc2e78bd2ec4f.js"></script>
+
 ## Improve the Q-Learning Driving Agent
 
-## Estimating Q from Transitions: Q-learning Equation
-- $$ \hat{Q}(s, a)\leftarrow_{\alpha_t} \ r + γ \ \max_{a'} \hat{Q}(s', a') $$
+## Parameter Tuning
+- With trial and error, it seems the following parameters allow the agent to perform best.
+    - Alpha (learning rate): 0.3
+    - Gamma (discount rate): 0.3
+    - Initial Q = 1
+    - Success rate: 100%
+    - ![](training_with_improv.png)
+
+### Final trial results
+<script src="https://gist.github.com/ritchieng/c6f75bad8426f013310e5598a322391a.js"></script>
+
+### Optimal Policy
+- The agent does reach to the final absorbing states in the minimum possible time while incurring minimum penalties.
+- Yet, it still does violate some traffic rules.
+- The optimal policy would be:
+    - Minimum possible time.
+    - Obey all traffic rules.
+    - No clashes with other cars.
