@@ -23,7 +23,11 @@ class LearningAgent(Agent):
         deadline = self.env.get_deadline(self)
 
         # TODO: Update state
-        
+        # These are the valid inputs from valid_inputs in the class Environment in environment.py
+        # 'light', 'oncoming', 'left', 'right'
+        # Using 'light' and next_waypoint,  we've tuples here
+        self.state = (self.next_waypoint, inputs['light'])
+
         # TODO: Select action according to your policy
         # random.choice(list) chooses a random element from the list
         # We can access the list through Environment.valid_actions since
