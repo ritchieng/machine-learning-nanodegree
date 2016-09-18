@@ -27,8 +27,7 @@ class LearningAgent(Agent):
         # Discount rate
         self.gamma = 0.2
         # Simulated annealing
-        self.epsilon = 1
-        self.p = random.randrange(0, 100)
+        self.epsilon = 10
         # Trials for plotting
         self.trials = -1
         self.max_trials = 100
@@ -68,9 +67,11 @@ class LearningAgent(Agent):
         # and not just still the the most conservative approach
         # It is a probabilistic technique for approximating the global optimum of a given function
 
-        # This implies epsilon (probability of random action) is 1%
+        # This implies epsilon (probability of random action) is 10%
         # 0 and 1 can be the only values less than epsilon, 2
-        if self.p < self.epsilon:
+        p = random.randrange(0, 100)
+
+        if p < self.epsilon:
             action = random.choice(self.env.valid_actions)
         else:
             action = self.env.valid_actions[max_Q]
@@ -97,7 +98,7 @@ class LearningAgent(Agent):
         else:
             self.y_trials[self.trials] = 1
 
-        # print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward)
+        print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward)
 
 
 def run():
@@ -117,14 +118,14 @@ def run():
     # NOTE: To quit midway, press Esc or close pygame window, or hit Ctrl+C on the command-line
 
     # print Q table
-    # import matplotlib.pyplot as plt
-    # plt.figure()
-    # plt.scatter(a.x_trials, a.y_trials)
-    # plt.legend()
-    # plt.xlabel('Trial Number')
-    # plt.ylabel('Successful = 1, Unsuccessful = 0')
-    # plt.title("Training Graph: Successful or Unsuccessful (With Improvements)")
-    # plt.show()
+    import matplotlib.pyplot as plt
+    plt.figure()
+    plt.scatter(a.x_trials, a.y_trials)
+    plt.legend()
+    plt.xlabel('Trial Number')
+    plt.ylabel('Successful = 1, Unsuccessful = 0')
+    plt.title("Training Graph: Successful or Unsuccessful (With Improvements)")
+    plt.show()
 
     # print a.y_trials
     # This is a list

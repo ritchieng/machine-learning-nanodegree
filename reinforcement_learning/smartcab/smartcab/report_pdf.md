@@ -84,17 +84,20 @@ https://gist.github.com/ritchieng/905f12bf65265331f0e051541379c767
 ### Parameters Initiated
 - Alpha (learning rate), is arbitrarily set at 0.3.
 - Gamma (discount rate), is arbitrarily set at 0.3.
-- Epsilon (randomness probability), is arbitrarily set such that it is 1%.
+- Epsilon (randomness probability), is arbitrarily set at 10 such that it is 10%.
+    - This is done by randomizing the values of p from 0 to 100. 
+    - And if p < epsilon, the smart cab would take a random action.
 - Q initial values set at 4
     - Although we will suffer more initial penalties trying out every action.
     - This will matter more only when scaling up this reinforcement learning problem to include more dummy agents.
-
+    - This technique is called optimistic initialization. 
+    
 ### Trial 100 results
 https://gist.github.com/ritchieng/02a2dd735ff4b13dccfeb45fb4e07fe3
 
 ### Results
 - The smart cab reaches the destination more frequently. 
-- Moreover, as you can see, we've achieved a success rate of 94% with a random assignment of parameters
+- Moreover, as you can see, we've achieved a success rate of 97% with a random assignment of parameters
      - ![](https://raw.githubusercontent.com/ritchieng/machine-learning-nanodegree/master/reinforcement_learning/smartcab/smartcab/training_without_improvements.png)
 - And if you look at the results of the 100 trails, we're having fewer violations of traffic rules compared to without learning.
      
@@ -108,11 +111,14 @@ https://gist.github.com/ritchieng/a43b7c188f083bb731efc2e78bd2ec4f
     - Alpha (learning rate): 0.8
     - Gamma (discount rate): 0.2
     - Initial Q = 4
-    - Success rate: 100%
+    - Success rate: 98%
     - ![](https://raw.githubusercontent.com/ritchieng/machine-learning-nanodegree/master/reinforcement_learning/smartcab/smartcab/training_with_improv.png)
 
-### Final trial results
+### Results of Final Trial
 https://gist.github.com/ritchieng/c6f75bad8426f013310e5598a322391a
+
+### Results of Prior Trials 
+https://gist.github.com/ritchieng/6702086652c592a54ebc6e686f0beed5
 
 ### Optimal Policy
 - The agent does reach to the final absorbing states in the minimum possible time while incurring minimum penalties.
@@ -120,4 +126,11 @@ https://gist.github.com/ritchieng/c6f75bad8426f013310e5598a322391a
     - Minimum possible time.
     - Obey all traffic rules.
     - No clashes with other cars.
-    
+- In this project, there are two issues resulting from the rewards' system. It benefits the agent to:
+    - Disobey traffic when the time is running out to reach the destination.
+        - This can be seen from the trials' summary above where when there is a red light, the car might still make a move instead of remaining stationary.
+        - This would cause accidents and this is undesirable in the real world.
+    - Going in circles when there is a lot of time left to have more rewards before reaching the absorbing state.
+        - This can be observed how the cab takes a particular long time initially when there is a lot of time. Thereby explaining the high number of moves in the trials' summary above.
+        - This would cause the smart cab to increase the cab fare in the real world and also delay the trip for the passenger, both of which are undesirable in the real world.
+        
