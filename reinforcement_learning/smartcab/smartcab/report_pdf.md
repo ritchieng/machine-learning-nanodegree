@@ -24,9 +24,9 @@ You can find all the relevant code for running this PyGame application and the s
 
 ### Code
 There is only a change of code for `action` to choose an action randomly through the list `valid_actions = [None, 'forward', 'left', 'right']`.
-https://gist.github.com/ritchieng/3a0a813e507f0e0ac68ebc9644fd71ac.js
+https://gist.github.com/ritchieng/3a0a813e507f0e0ac68ebc9644fd71ac
 
-## Graph of success and failures
+## Graph of successes and failures
 ![](https://raw.githubusercontent.com/ritchieng/machine-learning-nanodegree/master/reinforcement_learning/smartcab/smartcab/training_basic.png)
 
 ### Observations
@@ -73,7 +73,7 @@ https://gist.github.com/ritchieng/3a0a813e507f0e0ac68ebc9644fd71ac.js
     - This seems like a good balance of exploration and exploiting 6 states.
 
 ### Code
-https://gist.github.com/ritchieng/905f12bf65265331f0e051541379c767.js
+https://gist.github.com/ritchieng/905f12bf65265331f0e051541379c767
 
 ## Implement a Q-Learning Driving Agent
 
@@ -90,7 +90,7 @@ https://gist.github.com/ritchieng/905f12bf65265331f0e051541379c767.js
     - This will matter more only when scaling up this reinforcement learning problem to include more dummy agents.
 
 ### Trial 100 results
-https://gist.github.com/ritchieng/02a2dd735ff4b13dccfeb45fb4e07fe3.js
+https://gist.github.com/ritchieng/02a2dd735ff4b13dccfeb45fb4e07fe3
 
 ### Results
 - The smart cab reaches the destination more frequently. 
@@ -99,7 +99,7 @@ https://gist.github.com/ritchieng/02a2dd735ff4b13dccfeb45fb4e07fe3.js
 - And if you look at the results of the 100 trails, we're having fewer violations of traffic rules compared to without learning.
      
 ### Code
-https://gist.github.com/ritchieng/a43b7c188f083bb731efc2e78bd2ec4f.js
+https://gist.github.com/ritchieng/a43b7c188f083bb731efc2e78bd2ec4f
 
 ## Improve the Q-Learning Driving Agent
 
@@ -112,7 +112,7 @@ https://gist.github.com/ritchieng/a43b7c188f083bb731efc2e78bd2ec4f.js
     - ![](https://raw.githubusercontent.com/ritchieng/machine-learning-nanodegree/master/reinforcement_learning/smartcab/smartcab/training_with_improv.png)
 
 ### Final trial results
-https://gist.github.com/ritchieng/c6f75bad8426f013310e5598a322391a.js
+https://gist.github.com/ritchieng/c6f75bad8426f013310e5598a322391a
 
 ### Optimal Policy
 - The agent does reach to the final absorbing states in the minimum possible time while incurring minimum penalties.
