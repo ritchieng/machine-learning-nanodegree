@@ -27,7 +27,7 @@ There is only a change of code for `action` to choose an action randomly through
 <script src="https://gist.github.com/ritchieng/3a0a813e507f0e0ac68ebc9644fd71ac.js"></script>
 
 ## Graph of success and failures
-![](training_basic.png)
+![](https://raw.githubusercontent.com/ritchieng/machine-learning-nanodegree/master/reinforcement_learning/smartcab/smartcab/training_basic.png)
 
 ### Observations
 - If you look at the graph, the car only made it to the end 19 times out of 100 times (19% success rate) based on the following conditions:
@@ -79,7 +79,7 @@ There is only a change of code for `action` to choose an action randomly through
 
 ### Estimating Q from Transitions: Q-learning Equation
 - Personal notes:
-    - ![](report.png)
+    - ![](https://raw.githubusercontent.com/ritchieng/machine-learning-nanodegree/master/reinforcement_learning/smartcab/smartcab/report.png)
 
 ### Parameters Initiated
 - Alpha (learning rate), is arbitrarily set at 0.3.
@@ -98,7 +98,7 @@ There is only a change of code for `action` to choose an action randomly through
 ### Results
 - The smart cab reaches the destination more frequently. 
 - Moreover, as you can see, we've achieved a success rate of 97% with a random assignment of parameters
-     - ![](training_without_improvements.png)
+     - ![](https://raw.githubusercontent.com/ritchieng/machine-learning-nanodegree/master/reinforcement_learning/smartcab/smartcab/training_without_improvements.png)
 - And if you look at the results of the 100 trails, we're having fewer violations of traffic rules compared to without learning.
      
 ### Code
@@ -112,7 +112,7 @@ There is only a change of code for `action` to choose an action randomly through
     - Gamma (discount rate): 0.2
     - Initial Q = 4
     - Success rate: 98%
-    - ![](training_with_improv.png)
+    - ![](https://raw.githubusercontent.com/ritchieng/machine-learning-nanodegree/master/reinforcement_learning/smartcab/smartcab/training_with_improv.png)
 
 ### Results of Final Trial
 <script src="https://gist.github.com/ritchieng/c6f75bad8426f013310e5598a322391a.js"></script>
