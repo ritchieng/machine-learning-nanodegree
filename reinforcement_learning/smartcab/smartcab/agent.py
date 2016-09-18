@@ -17,14 +17,15 @@ class LearningAgent(Agent):
         # By doing so, you can just map the corresponding state to choose action in the future
         self.Q = {}
         for i in ['green', 'red']:
-            for j in self.env.valid_actions:
-                self.Q[(i, j)] = [1] * len(self.env.valid_actions)
+            for j in [None, 'forward', 'left', 'right']:
+                for k in self.env.valid_actions:
+                    self.Q[(i, j, k)] = [4] * len(self.env.valid_actions)
 
         # Initialize basic parameters of the Q-learning equation
         # Learning rate
-        self.alpha = 0.3
+        self.alpha = 0.8
         # Discount rate
-        self.gamma = 0.3
+        self.gamma = 0.2
         # Simulated annealing
         self.epsilon = 1
         self.p = random.randrange(0, 100)
@@ -51,7 +52,7 @@ class LearningAgent(Agent):
         # These are the valid inputs from valid_inputs in the class Environment in environment.py
         # 'light', 'oncoming', 'left', 'right'
         # Using 'light' and next_waypoint,  we've tuples here
-        self.state = (inputs['light'], self.next_waypoint)
+        self.state = (inputs['light'], inputs['oncoming'], self.next_waypoint)
 
         # TODO: Select action according to your policy
 
@@ -82,7 +83,7 @@ class LearningAgent(Agent):
         # Now we want the subsequent pair of state and action, Q(s',a')
         subse_inputs = self.env.sense(self)
         subse_next_waypoint = self.planner.next_waypoint()
-        subse_state = (subse_inputs['light'], subse_next_waypoint)
+        subse_state = (subse_inputs['light'], subse_inputs['oncoming'], subse_next_waypoint)
 
         # Update our Q table
         q_old = self.Q[self.state][self.env.valid_actions.index(action)]
@@ -116,20 +117,20 @@ def run():
     # NOTE: To quit midway, press Esc or close pygame window, or hit Ctrl+C on the command-line
 
     # print Q table
-    import matplotlib.pyplot as plt
-    plt.figure()
-    plt.scatter(a.x_trials, a.y_trials)
-    plt.legend()
-    plt.xlabel('Trial Number')
-    plt.ylabel('Successful = 1, Unsuccessful = 0')
-    plt.title("Training Graph: Successful or Unsuccessful (With Improvements)")
-    plt.show()
+    # import matplotlib.pyplot as plt
+    # plt.figure()
+    # plt.scatter(a.x_trials, a.y_trials)
+    # plt.legend()
+    # plt.xlabel('Trial Number')
+    # plt.ylabel('Successful = 1, Unsuccessful = 0')
+    # plt.title("Training Graph: Successful or Unsuccessful (With Improvements)")
+    # plt.show()
 
     # print a.y_trials
     # This is a list
     # print type(a.y_trials)
 
-    success_rate = ((a.y_trials.count(1)) / 100.00)*100.00
+    success_rate = a.y_trials.count(1)
     print success_rate
 
     # print a.Q
